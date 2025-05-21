@@ -1,0 +1,59 @@
+package apack;
+
+public class A {
+    int defaultVar = 10;
+    protected int protectedVar = 20;
+    private int privateVar = 30;
+    public int publicVar = 40;
+}
+package bpack;
+
+import apack.A;
+
+public class B extends A{
+    public void display () {
+        // System.out.println("Default: " + defaultVar); // Not accessible - different package
+        System.out.println("Protected: " + protectedVar); // Accessible - subclass
+        // System.out.println("Private: " + privateVar); // Not Accessible - private
+        System.out.println("Public: " + publicVar); // Accessible - public
+    }
+}
+package cpack;
+
+import apack.A;
+
+public class C {
+    public void display () {
+        A obj = new A();
+        // System.out.println("Default: " + obj.defaultVar); // Not accessible - different package
+        // System.out.println("Protected: " + obj.protectedVar); // Not accessible without inheritance
+        // System.out.println("Private: " + obj.privateVar); // Not accessible - private
+        System.out.println("Public: " + obj.publicVar); // Accessible - public
+    }
+}
+package dpack;
+
+import bpack.B;
+import cpack.C;
+
+public class D {
+    public static void main(String[] args) {
+        B b = new B();
+        C c = new C();
+        System.out.println("From class B");
+        b.display();
+        System.out.println();
+        System.out.println("From class C");
+        c.display();
+    }
+}
+
+
+/*
+From class B
+Protected: 20
+Public: 40
+
+From class C
+Public: 40
+*/
